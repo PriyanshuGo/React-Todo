@@ -2,14 +2,9 @@ import AddTask from "./components/AddTask";
 import DisplayTask from "./components/DisplayTask";
 import Head from "./components/Head";
 import { useState, useEffect } from "react";
-import { requestNotificationPermission } from "./firebaseConfig";
 
 function App() {
   const [allTask, setAllTask] = useState([]);
-
-  useEffect(() => {
-    requestNotificationPermission();
-  }, []);
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("allTask"));
