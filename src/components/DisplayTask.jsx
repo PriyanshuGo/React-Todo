@@ -25,7 +25,7 @@ function DisplayTask({ allTask, setAllTask }) {
   const handleClearAllTask = () => {
     setAllTask([]);
     setCompletedTasks([]);
-    setShowConfirm(showConfirm ? false : true);
+    setShowConfirm(false)
     localStorage.clear();
   };
 
@@ -72,17 +72,6 @@ function DisplayTask({ allTask, setAllTask }) {
         : null}
 
       {showConfirm ? (
-        <div className="flex justify-center">
-          <button
-            onClick={() => setShowConfirm(showConfirm ? false : true)}
-            className="bg-red-500 text-white font-bold w-full cursor-pointer flex justify-center items-center py-3 rounded-md hover:bg-red-600 space-x-2 "
-          >
-            {" "}
-            <Trash2 />
-            <span>Clear All Tasks</span>
-          </button>
-        </div>
-      ) : (
         <div className="border border-red-600 bg-red-900/30 rounded-md px-8 py-4 text-white space-y-4">
           <p>Are you sure you want to delete all tasks?</p>
           <div className="flex justify-center space-x-2">
@@ -99,6 +88,17 @@ function DisplayTask({ allTask, setAllTask }) {
               Cancel
             </button>
           </div>
+        </div>
+      ) : (
+        <div className="flex justify-center">
+          <button
+            onClick={() => setShowConfirm(showConfirm ? false : true)}
+            className="bg-red-500 text-white font-bold w-full cursor-pointer flex justify-center items-center py-3 rounded-md hover:bg-red-600 space-x-2 "
+          >
+            {" "}
+            <Trash2 />
+            <span>Clear All Tasks</span>
+          </button>
         </div>
       )}
     </div>
