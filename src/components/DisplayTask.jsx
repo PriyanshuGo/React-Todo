@@ -26,12 +26,13 @@ function DisplayTask() {
     localStorage.setItem("completedTask", JSON.stringify(putTask));
   };
 
-  const handleDeleteTask = (el, index) => {
+  const handleDeleteTask = (el) => {
     const taskDeleted = allTask.filter((element) => element !== el);
+    const completedTaskDeleted  = completedTasks.filter((element) => element !== el)
     setAllTask(taskDeleted);
     setCompletedTasks(completedTasks.filter((element) => element !== el));
     localStorage.setItem("allTask", JSON.stringify(taskDeleted));
-    localStorage.setItem("completedTask", JSON.stringify(taskDeleted))
+    localStorage.setItem("completedTask", JSON.stringify(completedTaskDeleted));
   };
 
   const handleClearAllTask = () => {
