@@ -1,48 +1,46 @@
-import React from "react";
 import { CircleCheck, CircleX, Trash2, Clock } from "lucide-react";
-import { useState, useEffect } from "react";
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { TaskContext } from "../contextCreate/Task";
 
 function DisplayTask() {
-  const { allTask, setAllTask } = useContext(TaskContext);
-  const [completedTasks, setCompletedTasks] = useState([]);
+  const { tasks, setTasks } = useContext(TaskContext);
   const [showConfirm, setShowConfirm] = useState(false);
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("allTask"));
-    const completedStored = JSON.parse(localStorage.getItem("completedTask"));
-    if (stored && completedStored) {
-      setAllTask(stored);
-      setCompletedTasks(completedStored);
+    const stored = JSON.parse(localStorage.getItem("Task"));
+    if (stored) {
+        setTasks(stored);
     }
   }, []);
 
   const handleTaskCompleted = (el) => {
-    let putTask = completedTasks.includes(el)
-      ? completedTasks.filter((i) => i !== el)
-      : [el, ...completedTasks];
-    setCompletedTasks(putTask);
-    localStorage.setItem("completedTask", JSON.stringify(putTask));
+    const updatedTasks = tasks.completedTask.includes(el)
+      ? tasks.completedTask.filter((i) => i !== el)
+      : [el, ...tasks.completedTask];
+
+      const updateLocalStorage = {...tasks,completedTask:updatedTasks}
+
+      if (JSON.stringify(updatedTasks) !== JSON.stringify(tasks.completedTask)) {
+        setTasks(updateLocalStorage);
+        localStorage.setItem("Task", JSON.stringify(updateLocalStorage));
+      }
   };
 
   const handleDeleteTask = (el) => {
-    const taskDeleted = allTask.filter((element) => element !== el);
-    const completedTaskDeleted  = completedTasks.filter((element) => element !== el)
-    setAllTask(taskDeleted);
-    setCompletedTasks(completedTasks.filter((element) => element !== el));
-    localStorage.setItem("allTask", JSON.stringify(taskDeleted));
-    localStorage.setItem("completedTask", JSON.stringify(completedTaskDeleted));
+    const updatedAllTasks = tasks.allTask.filter((element) => element !== el);
+    const updatedCompletedTasks = tasks.completedTask.filter((element) => element !== el);
+    const updatedTask = {allTask:updatedAllTasks,completedTask:updatedCompletedTasks}
+    setTasks(updatedTask );
+    localStorage.setItem("Task", JSON.stringify(updatedTask));
   };
 
   const handleClearAllTask = () => {
-    setAllTask([]);
-    setCompletedTasks([]);
+    setTasks({allTask:[],completedTask:[]});
     setShowConfirm(false);
     localStorage.clear();
   };
 
-  if (!allTask.length > 0) {
+  if (!tasks.allTask.length > 0) {
     return (
       <div className="text-center py-10 text-gray-400">
         <Clock className="h-12 w-12 mx-auto mb-4 opacity-50" />
@@ -54,18 +52,18 @@ function DisplayTask() {
 
   return (
     <div className=" space-y-10 my-10  ">
-      {allTask.length > 0 ? (
-        <p className="text-2xl text-white">Your Tasks({allTask.length})</p>
+      {tasks.allTask.length > 0 ? (
+        <p className="text-2xl text-white">Your Tasks({tasks.allTask.length})</p>
       ) : null}
-      {allTask
-        ? allTask.map((el, index) => (
+      {tasks.allTask
+        ? tasks.allTask.map((el, index) => (
             <div
               key={index}
               className=" flex p-5 text-white bg-gray-800 rounded  space-x-4 transition-all hover:bg-gray-700/80"
             >
               <p
                 className={`flex-1 ${
-                  completedTasks.includes(el)
+                  tasks.completedTask.includes(el)
                     ? "line-through text-gray-400"
                     : null
                 }`}

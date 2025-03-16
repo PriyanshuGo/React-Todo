@@ -1,20 +1,33 @@
-import React from "react";
-import { useState } from "react";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { TaskContext } from "../contextCreate/Task";
 
 function AddTask() {
-  const {allTask,setAllTask} = useContext(TaskContext);
+  const {tasks,setTasks} = useContext(TaskContext);
   const [task, setTask] = useState("");
 
   const AddNewTask = () => {
-    if (task.trim().length > 0 && !allTask.includes(task.trim())) {
-      localStorage.setItem("allTask", JSON.stringify([task, ...allTask]));
-      setAllTask([task, ...allTask]);
+    const trimedTask = task.trim();
+    if (trimedTask.length > 0 && !tasks.allTask.includes(trimedTask)) {
+      const addedTask = {...tasks,allTask:[task,...tasks.allTask]};
+      localStorage.setItem("Task", JSON.stringify(addedTask));
+      setTasks(addedTask);
       setTask("");
     }
   };
-
+  // const AddNewTask = () => {
+  //   const trimmedTask = task.trim();
+  //   if (trimmedTask.length > 0 && !tasks.allTask.includes(trimmedTask)) {
+  //     const addedTask = { 
+  //       ...tasks, 
+  //       allTask: [trimmedTask, ...tasks.allTask] 
+  //     };
+  //     console.log(addedTask);
+  //     localStorage.setItem("tasks", JSON.stringify(addedTask));
+  //     setTasks(addedTask);
+  //     setTask("");
+  //   }
+  // };
+  
   return (
     <div className="flex justify-center ">
       <form

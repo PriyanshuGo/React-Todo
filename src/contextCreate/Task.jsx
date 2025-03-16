@@ -1,11 +1,12 @@
-import React, { Children } from "react";
-import { createContext } from "react";
-import { useState } from "react";
+import { useState, createContext } from "react";
 
 export const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
-    const [allTask, setAllTask] = useState([]);
+    const [tasks, setTasks] = useState({
+      allTask:[],
+      completedTask:[]
+    });
   
-  return <TaskContext.Provider value={{allTask,setAllTask}}>{children}</TaskContext.Provider>;
+  return <TaskContext.Provider value={{tasks,setTasks}}>{children}</TaskContext.Provider>;
 };
