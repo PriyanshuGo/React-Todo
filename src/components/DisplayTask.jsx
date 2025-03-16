@@ -31,6 +31,7 @@ function DisplayTask() {
     setAllTask(taskDeleted);
     setCompletedTasks(completedTasks.filter((element) => element !== el));
     localStorage.setItem("allTask", JSON.stringify(taskDeleted));
+    localStorage.setItem("completedTask", JSON.stringify(taskDeleted))
   };
 
   const handleClearAllTask = () => {
