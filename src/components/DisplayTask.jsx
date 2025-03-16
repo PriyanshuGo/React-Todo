@@ -1,41 +1,53 @@
 import { CircleCheck, CircleX, Trash2, Clock } from "lucide-react";
 import { useState, useEffect, useContext } from "react";
 import { TaskContext } from "../contextCreate/Task";
+import TaskItem from "./TaskItem";
 
 function DisplayTask() {
   const { tasks, setTasks } = useContext(TaskContext);
   const [showConfirm, setShowConfirm] = useState(false);
-
+  const [loading, setLoading] = useState(true); 
+  
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("Task"));
     if (stored) {
-        setTasks(stored);
+      setTasks(stored);
     }
+    setLoading(false);
   }, []);
+
+  if (loading) {
+    return null;
+  }
 
   const handleTaskCompleted = (el) => {
     const updatedTasks = tasks.completedTask.includes(el)
       ? tasks.completedTask.filter((i) => i !== el)
       : [el, ...tasks.completedTask];
 
-      const updateLocalStorage = {...tasks,completedTask:updatedTasks}
+    const updateLocalStorage = { ...tasks, completedTask: updatedTasks };
 
-      if (JSON.stringify(updatedTasks) !== JSON.stringify(tasks.completedTask)) {
-        setTasks(updateLocalStorage);
-        localStorage.setItem("Task", JSON.stringify(updateLocalStorage));
-      }
+    if (JSON.stringify(updatedTasks) !== JSON.stringify(tasks.completedTask)) {
+      setTasks(updateLocalStorage);
+      localStorage.setItem("Task", JSON.stringify(updateLocalStorage));
+    }
   };
 
   const handleDeleteTask = (el) => {
     const updatedAllTasks = tasks.allTask.filter((element) => element !== el);
-    const updatedCompletedTasks = tasks.completedTask.filter((element) => element !== el);
-    const updatedTask = {allTask:updatedAllTasks,completedTask:updatedCompletedTasks}
-    setTasks(updatedTask );
+    const updatedCompletedTasks = tasks.completedTask.filter(
+      (element) => element !== el
+    );
+    const updatedTask = {
+      allTask: updatedAllTasks,
+      completedTask: updatedCompletedTasks,
+    };
+    setTasks(updatedTask);
     localStorage.setItem("Task", JSON.stringify(updatedTask));
   };
 
   const handleClearAllTask = () => {
-    setTasks({allTask:[],completedTask:[]});
+    setTasks({ allTask: [], completedTask: [] });
     setShowConfirm(false);
     localStorage.clear();
   };
@@ -51,37 +63,11 @@ function DisplayTask() {
   }
 
   return (
-    <div className=" space-y-10 my-10  ">
-      {tasks.allTask.length > 0 ? (
-        <p className="text-2xl text-white">Your Tasks({tasks.allTask.length})</p>
-      ) : null}
-      {tasks.allTask
-        ? tasks.allTask.map((el, index) => (
-            <div
-              key={index}
-              className=" flex p-5 text-white bg-gray-800 rounded  space-x-4 transition-all hover:bg-gray-700/80"
-            >
-              <p
-                className={`flex-1 ${
-                  tasks.completedTask.includes(el)
-                    ? "line-through text-gray-400"
-                    : null
-                }`}
-              >
-                {el}
-              </p>
-              <CircleCheck
-                onClick={() => handleTaskCompleted(el)}
-                className="cursor-pointer text-green-600"
-              />
-              <CircleX
-                onClick={() => handleDeleteTask(el, index)}
-                className="cursor-pointer text-red-600"
-              />
-            </div>
-          ))
-        : null}
-
+    <div>
+      <TaskItem
+        handleTaskCompleted={handleTaskCompleted}
+        handleDeleteTask={handleDeleteTask}
+      />
       {showConfirm ? (
         <div className="border border-red-600 bg-red-900/30 rounded-md px-8 py-4 text-white space-y-4">
           <p>Are you sure you want to delete all tasks?</p>
