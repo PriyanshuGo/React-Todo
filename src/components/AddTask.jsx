@@ -1,13 +1,15 @@
 import React from "react";
 import { useState } from "react";
+import { useContext } from "react";
+import { TaskContext } from "../contextCreate/Task";
 
-function AddTask({ allTask, setAllTask }) {
+function AddTask() {
+  const {allTask,setAllTask} = useContext(TaskContext);
   const [task, setTask] = useState("");
 
   const AddNewTask = () => {
     if (task.trim().length > 0 && !allTask.includes(task.trim())) {
-      let temp = [task, ...allTask];
-      localStorage.setItem("allTask", JSON.stringify(temp));
+      localStorage.setItem("allTask", JSON.stringify([task, ...allTask]));
       setAllTask([task, ...allTask]);
       setTask("");
     }

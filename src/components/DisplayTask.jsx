@@ -1,31 +1,42 @@
 import React from "react";
 import { CircleCheck, CircleX, Trash2, Clock } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { TaskContext } from "../contextCreate/Task";
 
-function DisplayTask({ allTask, setAllTask }) {
+function DisplayTask() {
+  const { allTask, setAllTask } = useContext(TaskContext);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false);
 
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("allTask"));
+    const completedStored = JSON.parse(localStorage.getItem("completedTask"));
+    if (stored && completedStored) {
+      setAllTask(stored);
+      setCompletedTasks(completedStored);
+    }
+  }, []);
+
   const handleTaskCompleted = (el) => {
-    setCompletedTasks(
-      completedTasks.includes(el)
-        ? completedTasks.filter((i) => i !== el)
-        : [el, ...completedTasks]
-    );
+    let putTask = completedTasks.includes(el)
+      ? completedTasks.filter((i) => i !== el)
+      : [el, ...completedTasks];
+    setCompletedTasks(putTask);
+    localStorage.setItem("completedTask", JSON.stringify(putTask));
   };
 
   const handleDeleteTask = (el, index) => {
     const taskDeleted = allTask.filter((element) => element !== el);
     setAllTask(taskDeleted);
     setCompletedTasks(completedTasks.filter((element) => element !== el));
-
     localStorage.setItem("allTask", JSON.stringify(taskDeleted));
   };
 
   const handleClearAllTask = () => {
     setAllTask([]);
     setCompletedTasks([]);
-    setShowConfirm(false)
+    setShowConfirm(false);
     localStorage.clear();
   };
 
@@ -83,7 +94,7 @@ function DisplayTask({ allTask, setAllTask }) {
             </button>
             <button
               className="cursor-pointer py-2 px-5 font-medium rounded-lg bg-gray-500 hover:bg-gray-600"
-              onClick={() => setShowConfirm(showConfirm ? false : true)}
+              onClick={() => setShowConfirm(!showConfirm)}
             >
               Cancel
             </button>
