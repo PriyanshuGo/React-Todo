@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 
 function Quote() {
   const [quote, setQuote] = useState(null);
-  const API = "https://api.freeapi.app/api/v1/public/quotes/quote/random";
+  const API = "https://official-joke-api.appspot.com/jokes/random";
   const QuoteOfTheDay = async () => {
     try {
       const res = await axios.get(API);
-      setQuote(res.data);
+      setQuote(res);
     } catch (error) {
       console.error("Error fetching the quote:", error);
     }
@@ -16,11 +16,17 @@ function Quote() {
     QuoteOfTheDay();
   }, []);
 
-  return (
-    <div className="text-white text-center bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 shadow-md border border-gray-700 mb-4 mx-2">
-      {quote && quote.data && quote.data.content}
-    </div>
-  );
+  if (quote) {
+    const { data: { setup, punchline } } = quote;
+    return (
+      <div className="text-white text-center bg-gray-800/70 backdrop-blur-md rounded-xl p-6 shadow-lg border border-gray-700 mb-4 mx-2 transition-all duration-500 hover:scale-105">
+        <h2 className="text-xl font-semibold mb-2 text-teal-400">{setup}</h2>
+        <p className="text-lg text-gray-300 mt-2 italic">{punchline}</p>
+      </div>
+    );
+  }
+
+  return null;
 }
 
 export default Quote;
