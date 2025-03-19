@@ -39,14 +39,7 @@ const Navbar = () => {
           <ul className="hidden lg:flex lg:flex-row lg:space-x-8">
             {navLinks.map((link, index) => (
               <li key={index}>
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? "text-teal-400 font-bold" : "text-white"
-                  }
-                  to={link.href}
-                >
-                  {link.label}
-                </NavLink>
+                <NavLink to={link.href}>{link.label}</NavLink>
               </li>
             ))}
           </ul>
