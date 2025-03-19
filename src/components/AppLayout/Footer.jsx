@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Mail } from 'lucide-react';
 
 
 function Footer() {
     const footLinks = [
-        { lable: "About Us", href: "#" },
+        { lable: "About Us", href: "/about" },
         { lable: "Features", href: "#" },
         { lable: "Pricing & Plans", href: "#" },
-        { lable: "Contact Us", href: "#" },
+        { lable: "Contact Us", href: "/contact" },
     ]
 
     return (
@@ -24,9 +24,9 @@ function Footer() {
                 <ul className='flex flex-col space-y-4 sm:flex-row sm:justify-evenly items-center'>
                     {footLinks.map((el, index) => (
                         <li key={index}>
-                            <Link to={el.href}>
+                            <NavLink to={el.href}>
                                 {el.lable}
-                            </Link>
+                            </NavLink>
                         </li>
                     ))}
                 </ul>

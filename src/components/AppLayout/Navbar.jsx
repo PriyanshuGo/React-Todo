@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Menu } from "lucide-react";
 
 const Navbar = () => {
@@ -39,7 +39,14 @@ const Navbar = () => {
           <ul className="hidden lg:flex lg:flex-row lg:space-x-8">
             {navLinks.map((link, index) => (
               <li key={index}>
-                <Link to={link.href}>{link.label}</Link>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "text-teal-400 font-bold" : "text-white"
+                  }
+                  to={link.href}
+                >
+                  {link.label}
+                </NavLink>
               </li>
             ))}
           </ul>
@@ -54,7 +61,15 @@ const Navbar = () => {
         <ul className="space-y-4 mx-8 text-lg font-semibold">
           {navLinks.map((link, index) => (
             <li key={index}>
-              <Link to={link.href}>{link.label}</Link>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? "text-teal-400 font-bold" : "text-white"
+                }
+                to={link.href}
+                onClick={handleMenu}
+              >
+                {link.label}
+              </NavLink>
             </li>
           ))}
         </ul>
