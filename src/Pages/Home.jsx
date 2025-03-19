@@ -6,10 +6,10 @@ import { TaskProvider } from "../contextCreate/Task";
 
 function Home() {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center h-full">
       <Head />
       <Quote />
-      <div className=" bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700">
+      <div className=" bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700 w-full max-w-4xl mt-6">
         <TaskProvider>
           <AddTask />
           <DisplayTask />

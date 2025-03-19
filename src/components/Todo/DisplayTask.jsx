@@ -1,4 +1,4 @@
-import { CircleCheck, CircleX, Trash2, Clock } from "lucide-react";
+import { Trash2, Clock } from "lucide-react";
 import { useState, useEffect, useContext } from "react";
 import { TaskContext } from "../../contextCreate/Task";
 import TaskItem from "./TaskItem";
