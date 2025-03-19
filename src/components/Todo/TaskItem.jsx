@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { TaskContext } from "../contextCreate/Task";
+import { TaskContext } from "../../contextCreate/Task";
 import { CircleCheck, CircleX } from "lucide-react";
 
 function TaskItem({ handleTaskCompleted, handleDeleteTask }) {

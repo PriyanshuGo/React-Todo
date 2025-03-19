@@ -1,19 +1,29 @@
-import AddTask from "./components/AddTask";
-import DisplayTask from "./components/DisplayTask";
-import Head from "./components/Head";
-import Quote from "./components/Quote";
+import React from "react";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+  Route,
+} from "react-router-dom";
+import Home from "./Pages/Home";
+import Movies from "./Pages/Movies";
+import About from "./Pages/About";
+import Contact from "./Pages/Contact";
+import AppLayout from "./Pages/AppLayout";
 
 function App() {
-  return (
-    <div className="flex flex-col items-center">
-      <Head />
-      <Quote />
-      <div className=" bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700">
-        <AddTask />
-        <DisplayTask />
-      </div>
-    </div>
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<AppLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="movies" element={<Movies />} />
+        <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact />} />
+      </Route>
+    )
   );
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;

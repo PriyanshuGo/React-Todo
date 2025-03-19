@@ -17,7 +17,7 @@ function Quote() {
   }, []);
 
   return (
-    <div className="text-white text-center bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 shadow-md border border-gray-700 mb-4">
+    <div className="text-white text-center bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 shadow-md border border-gray-700 mb-4 mx-2">
       {quote && quote.data && quote.data.content}
     </div>
   );

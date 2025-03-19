@@ -12,7 +12,7 @@ function Head() {
   }, []);
 
   return (
-    <div className="my-7">
+    <div className="my-7 mx-2">
       <h1 className="text-4xl font-bold text-center text-white tracking-tight">
         Todo List
       </h1>
